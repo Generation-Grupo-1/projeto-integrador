@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import br.org.apostilas_educa.model.Produtos;
 
 public interface ProdutosRepository extends JpaRepository<Produtos, Long>{
-	public List <Produtos> finAllByNomeContainingIgnoreCase(@Param("nome")String nome);
+	public List <Produtos> findAllByNomeContainingIgnoreCase(@Param("nome")String nome);
 
 }
