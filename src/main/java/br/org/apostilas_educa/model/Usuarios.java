@@ -18,7 +18,7 @@ public class Usuarios {
 
 	@NotBlank(message = "O atributo usuário é obrigatório")
 	@Size(min = 5, max = 255, message = "O atributo usuário deve conter no mínimo 10 e no máximo 1000 caracteres")
-	private String usuario;
+	private String usuario;		//username(login)
 
 	@NotBlank(message = "O atributo nome é obrigatório")
 	@Size(min = 5, max = 255, message = "O atributo nome deve conter no mínimo 10 e no máximo 1000 caracteres")
