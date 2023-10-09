@@ -32,8 +32,8 @@ public class UsuariosController {
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @GetMapping("/email/")
-    public ResponseEntity<Usuarios> getByEmail(@RequestBody @Valid String email) {
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Usuarios> getByEmail(@PathVariable String email) {
         return ResponseEntity.ok(usuariosRepository.findByEmailContainingIgnoreCase(email));
 
     }
