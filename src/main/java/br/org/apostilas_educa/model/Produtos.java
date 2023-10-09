@@ -2,10 +2,13 @@ package br.org.apostilas_educa.model;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -45,6 +48,10 @@ public class Produtos {
 	@NotBlank(message = "O atributo comentario é Obrigatório!")
 	@Size(min = 10, max = 1000, message = "O atributo descricao deve conter no mínimo 10 e no máximo 1000 caracteres")
 	private String comentario;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("produtos")
+	private Categorias categorias;
 
 	public Long getId() {
 		return id;
@@ -109,4 +116,15 @@ public class Produtos {
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
 	}
+
+	public Categorias getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(Categorias categorias) {
+		this.categorias = categorias;
+	}
+
+	
+	
 }
