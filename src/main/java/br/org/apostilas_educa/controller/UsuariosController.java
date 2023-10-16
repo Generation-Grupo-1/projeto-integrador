@@ -28,7 +28,7 @@ public class UsuariosController {
 	public ResponseEntity<List<Usuarios>> getAll() {
 		return ResponseEntity.ok(usuariosRepository.findAll());
 	}
-
+  
 	@GetMapping("/{id}")
 	public ResponseEntity<Usuarios> getById(@PathVariable Long id) {
 		return usuariosRepository.findById(id).map(response -> ResponseEntity.ok(response))
