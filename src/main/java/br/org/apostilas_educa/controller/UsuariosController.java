@@ -1,13 +1,14 @@
 package br.org.apostilas_educa.controller;
 
+import br.org.apostilas_educa.model.UsuarioLogin;
 import br.org.apostilas_educa.model.Usuarios;
 import br.org.apostilas_educa.repository.UsuariosRepository;
+import br.org.apostilas_educa.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,50 +18,47 @@ import java.util.Optional;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UsuariosController {
 
-    @Autowired
-    private UsuariosRepository usuariosRepository;
+	@Autowired
+	private UsuarioService usuarioService;
 
-    @GetMapping
-    public ResponseEntity<List<Usuarios>> getAll() {
-        return ResponseEntity.ok(usuariosRepository.findAll());
-    }
+	@Autowired
+	private UsuariosRepository usuariosRepository;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Usuarios> getById(@PathVariable Long id) {
-        return usuariosRepository.findById(id)
-                .map(response -> ResponseEntity.ok(response))
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    }
+	@GetMapping("/all")
+	public ResponseEntity<List<Usuarios>> getAll() {
+		return ResponseEntity.ok(usuariosRepository.findAll());
+	}
 
-    @GetMapping("/email/")
-    public ResponseEntity<Usuarios> getByEmail(@RequestBody @Valid String email) {
-        return ResponseEntity.ok(usuariosRepository.findByEmailContainingIgnoreCase(email));
+	@GetMapping("/{id}")
+	public ResponseEntity<Usuarios> getById(@PathVariable Long id) {
+		return usuariosRepository.findById(id).map(response -> ResponseEntity.ok(response))
+				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+	}
 
-    }
+	@PostMapping("/logar")
+	public ResponseEntity<UsuarioLogin> autenticarUsuario(@RequestBody Optional<UsuarioLogin> usuarioLogin) {
 
-    @PostMapping
-    public ResponseEntity<Usuarios> createUser(@RequestBody @Valid Usuarios usuarios) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(usuariosRepository.save(usuarios));
-    }
+		return usuarioService.autenticarUsuario(usuarioLogin)
+				.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
+				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+	}
 
-    @PutMapping
-    public ResponseEntity<Usuarios> put(@Valid @RequestBody Usuarios usuarios){
-        return usuariosRepository.findById(usuarios.getId())
-                .map(response -> ResponseEntity.status(HttpStatus.OK)
-                        .body(usuariosRepository.save(usuarios)))
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    }
+	@PostMapping("/cadastrar")
+	public ResponseEntity<Usuarios> postUsuario(@RequestBody @Valid Usuarios usuario) {
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        Optional<Usuarios> usuarios = usuariosRepository.findById(id);
+		return usuarioService.cadastrarUsuario(usuario)
+			.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
+			.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 
-        if(usuarios.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+	}
 
-        usuariosRepository.deleteById(id);
-    }
+	@PutMapping("/atualizar")
+	public ResponseEntity<Usuarios> putUsuario(@Valid @RequestBody Usuarios usuario) {
+		
+		return usuarioService.atualizarUsuario(usuario)
+			.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))
+			.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+		
+	}
 
 }
