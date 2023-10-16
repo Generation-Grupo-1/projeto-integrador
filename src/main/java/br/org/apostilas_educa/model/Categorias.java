@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,7 +25,7 @@ public class Categorias {
     @NotBlank(message = "O atributo tipo é obrigatório!")
     private String tipo;
     
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categorias",cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("categorias")
     private List<Produtos> produtos;
 

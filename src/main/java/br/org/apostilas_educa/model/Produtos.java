@@ -49,9 +49,15 @@ public class Produtos {
 	@Size(min = 10, max = 1000, message = "O atributo descricao deve conter no mínimo 10 e no máximo 1000 caracteres")
 	private String comentario;
 	
+	
+	
 	@ManyToOne
 	@JsonIgnoreProperties("produtos")
 	private Categorias categorias;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("produtos")
+	private Usuarios usuarios;
 
 	public Long getId() {
 		return id;
@@ -125,6 +131,12 @@ public class Produtos {
 		this.categorias = categorias;
 	}
 
-	
+	public Usuarios getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(Usuarios usuarios) {
+		this.usuarios = usuarios;
+	}
 	
 }
