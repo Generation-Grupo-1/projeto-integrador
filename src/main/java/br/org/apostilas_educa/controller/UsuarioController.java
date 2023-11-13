@@ -1,8 +1,8 @@
 package br.org.apostilas_educa.controller;
 
+import br.org.apostilas_educa.model.Usuario;
 import br.org.apostilas_educa.model.UsuarioLogin;
-import br.org.apostilas_educa.model.Usuarios;
-import br.org.apostilas_educa.repository.UsuariosRepository;
+import br.org.apostilas_educa.repository.UsuarioRepository;
 import br.org.apostilas_educa.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,22 +16,22 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/usuarios")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class UsuariosController {
+public class UsuarioController {
 
 	@Autowired
 	private UsuarioService usuarioService;
 
 	@Autowired
-	private UsuariosRepository usuariosRepository;
+	private UsuarioRepository usuarioRepository;
 
 	@GetMapping("/all")
-	public ResponseEntity<List<Usuarios>> getAll() {
-		return ResponseEntity.ok(usuariosRepository.findAll());
+	public ResponseEntity<List<Usuario>> getAll() {
+		return ResponseEntity.ok(usuarioRepository.findAll());
 	}
   
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuarios> getById(@PathVariable Long id) {
-		return usuariosRepository.findById(id).map(response -> ResponseEntity.ok(response))
+	public ResponseEntity<Usuario> getById(@PathVariable Long id) {
+		return usuarioRepository.findById(id).map(response -> ResponseEntity.ok(response))
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 
@@ -44,7 +44,7 @@ public class UsuariosController {
 	}
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Usuarios> postUsuario(@RequestBody @Valid Usuarios usuario) {
+	public ResponseEntity<Usuario> postUsuario(@RequestBody @Valid Usuario usuario) {
 
 		return usuarioService.cadastrarUsuario(usuario)
 			.map(resposta -> ResponseEntity.status(HttpStatus.CREATED).body(resposta))
@@ -53,7 +53,7 @@ public class UsuariosController {
 	}
 
 	@PutMapping("/atualizar")
-	public ResponseEntity<Usuarios> putUsuario(@Valid @RequestBody Usuarios usuario) {
+	public ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuario) {
 		
 		return usuarioService.atualizarUsuario(usuario)
 			.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(resposta))

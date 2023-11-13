@@ -2,6 +2,7 @@ package br.org.apostilas_educa.service;
 
 import java.util.Optional;
 
+import br.org.apostilas_educa.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,15 +13,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.org.apostilas_educa.model.UsuarioLogin;
-import br.org.apostilas_educa.model.Usuarios;
-import br.org.apostilas_educa.repository.UsuariosRepository;
+import br.org.apostilas_educa.repository.UsuarioRepository;
 import br.org.apostilas_educa.security.JwtService;
 
 @Service
 public class UsuarioService {
 
 	@Autowired
-	private UsuariosRepository usuarioRepository;
+	private UsuarioRepository usuarioRepository;
 
 	@Autowired
 	private JwtService jwtService;
@@ -28,7 +28,7 @@ public class UsuarioService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	public Optional<Usuarios> cadastrarUsuario(Usuarios usuario) {
+	public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
 
 		if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent())
 			return Optional.empty();
@@ -39,11 +39,11 @@ public class UsuarioService {
 
 	}
 
-	public Optional<Usuarios> atualizarUsuario(Usuarios usuario) {
+	public Optional<Usuario> atualizarUsuario(Usuario usuario) {
 
 		if (usuarioRepository.findById(usuario.getId()).isPresent()) {
 
-			Optional<Usuarios> buscaUsuario = usuarioRepository.findByUsuario(usuario.getUsuario());
+			Optional<Usuario> buscaUsuario = usuarioRepository.findByUsuario(usuario.getUsuario());
 
 			if ((buscaUsuario.isPresent()) && (buscaUsuario.get().getId() != usuario.getId()))
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
@@ -67,7 +67,7 @@ public class UsuarioService {
 
 		if (authentication.isAuthenticated()) {
 
-			Optional<Usuarios> usuario = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
+			Optional<Usuario> usuario = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
 
 			if (usuario.isPresent()) {
 

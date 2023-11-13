@@ -16,7 +16,7 @@ import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tb_categorias")
-public class Categorias {
+public class Categoria {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,9 +25,9 @@ public class Categorias {
     @NotBlank(message = "O atributo tipo é obrigatório!")
     private String tipo;
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categorias",cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria",cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("categorias")
-    private List<Produtos> produtos;
+    private List<Produto> produtos;
 
 	public Long getId() {
 		return id;
@@ -45,11 +45,11 @@ public class Categorias {
 		this.tipo = tipo;
 	}
 
-	public List<Produtos> getProdutos() {
+	public List<Produto> getProdutos() {
 		return produtos;
 	}
 
-	public void setProdutos(List<Produtos> produtos) {
+	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
 	}
     

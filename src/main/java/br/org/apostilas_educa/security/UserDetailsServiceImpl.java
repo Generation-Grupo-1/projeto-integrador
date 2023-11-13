@@ -10,18 +10,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import br.org.apostilas_educa.model.Usuarios;
-import br.org.apostilas_educa.repository.UsuariosRepository;
+import br.org.apostilas_educa.model.Usuario;
+import br.org.apostilas_educa.repository.UsuarioRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
 	
 	@Autowired
-	private UsuariosRepository usuariosRepository;
+	private UsuarioRepository usuarioRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException{
-		Optional<Usuarios> usuario = usuariosRepository.findByUsuario(userName);
+		Optional<Usuario> usuario = usuarioRepository.findByUsuario(userName);
 		
 		if(usuario.isPresent())
 			return new UserDetailsImpl(usuario.get());

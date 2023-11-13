@@ -3,10 +3,9 @@ package br.org.apostilas_educa.security;
 import java.util.Collection;
 import java.util.List;
 
+import br.org.apostilas_educa.model.Usuario;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import br.org.apostilas_educa.model.Usuarios;
 
 public class UserDetailsImpl implements UserDetails{
 	
@@ -16,7 +15,7 @@ public class UserDetailsImpl implements UserDetails{
 	private String password;
 	private List<GrantedAuthority> authorities;
 	
-	public UserDetailsImpl(Usuarios user) {
+	public UserDetailsImpl(Usuario user) {
 		this.userName = user.getUsuario();
 		this.password = user.getSenha();
 	}

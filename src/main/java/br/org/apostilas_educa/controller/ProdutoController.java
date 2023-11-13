@@ -3,6 +3,7 @@ package br.org.apostilas_educa.controller;
 import java.util.List;
 import java.util.Optional;
 
+import br.org.apostilas_educa.model.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,50 +19,49 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import br.org.apostilas_educa.model.Produtos;
-import br.org.apostilas_educa.repository.CategoriasRepository;
-import br.org.apostilas_educa.repository.ProdutosRepository;
+import br.org.apostilas_educa.repository.CategoriaRepository;
+import br.org.apostilas_educa.repository.ProdutoRepository;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/produtos")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class ProdutosController {
+public class ProdutoController {
 
 	@Autowired
-	private ProdutosRepository produtosRepository;
+	private ProdutoRepository produtoRepository;
 
 	@Autowired
-	private CategoriasRepository categoriasRepository;
+	private CategoriaRepository categoriaRepository;
 
 	@GetMapping
-	public ResponseEntity<List<Produtos>> getAll() {
-		return ResponseEntity.ok(produtosRepository.findAll());
+	public ResponseEntity<List<Produto>> getAll() {
+		return ResponseEntity.ok(produtoRepository.findAll());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Produtos> getById(@PathVariable Long id) {
-		return produtosRepository.findById(id).map(resposta -> ResponseEntity.ok(resposta))
+	public ResponseEntity<Produto> getById(@PathVariable Long id) {
+		return produtoRepository.findById(id).map(resposta -> ResponseEntity.ok(resposta))
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<Produtos>> getByNome(@PathVariable String nome) {
-		return ResponseEntity.ok(produtosRepository.findAllByNomeContainingIgnoreCase(nome));
+	public ResponseEntity<List<Produto>> getByNome(@PathVariable String nome) {
+		return ResponseEntity.ok(produtoRepository.findAllByNomeContainingIgnoreCase(nome));
 	}
 
 	@PostMapping
-	public ResponseEntity<Produtos> post(@Valid @RequestBody Produtos produtos) {
-		if (categoriasRepository.existsById(produtos.getCategorias().getId()))
-			return ResponseEntity.status(HttpStatus.CREATED).body(produtosRepository.save(produtos));
+	public ResponseEntity<Produto> post(@Valid @RequestBody Produto produto) {
+		if (categoriaRepository.existsById(produto.getCategorias().getId()))
+			return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Categoria não existe!", null);
 	}
 
 	@PutMapping
-	public ResponseEntity<Produtos> put(@Valid @RequestBody Produtos produtos) {
-		if (produtosRepository.existsById(produtos.getId())) {
-			if (categoriasRepository.existsById(produtos.getCategorias().getId()))
-				return ResponseEntity.status(HttpStatus.OK).body(produtosRepository.save(produtos));
+	public ResponseEntity<Produto> put(@Valid @RequestBody Produto produto) {
+		if (produtoRepository.existsById(produto.getId())) {
+			if (categoriaRepository.existsById(produto.getCategorias().getId()))
+				return ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto));
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Categoria não existe!", null);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -70,11 +70,11 @@ public class ProdutosController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
-		Optional<Produtos> produtos = produtosRepository.findById(id);
+		Optional<Produto> produtos = produtoRepository.findById(id);
 
 		if (produtos.isEmpty())
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		produtosRepository.deleteById(id);
+		produtoRepository.deleteById(id);
 	}
 
 }

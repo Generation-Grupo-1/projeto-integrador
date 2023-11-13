@@ -19,7 +19,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_usuarios")
-public class Usuarios {
+public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,11 +39,11 @@ public class Usuarios {
 	private String senha;
 
 	@NotBlank(message = "O atributo tipo é obrigatório")
-	private String tipo;
+	private String tipo="USER";
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuarios")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
     @JsonIgnoreProperties("usuarios")
-    private List<Produtos> produtos;
+    private List<Produto> produtos;
 
 	public Long getId() {
 		return id;
@@ -85,11 +85,11 @@ public class Usuarios {
 		this.tipo = tipo;
 	}
 
-	public List<Produtos> getProdutos() {
+	public List<Produto> getProdutos() {
 		return produtos;
 	}
 
-	public void setProdutos(List<Produtos> produtos) {
+	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
 	}
 	
