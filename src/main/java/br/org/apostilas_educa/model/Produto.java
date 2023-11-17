@@ -10,10 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "tb_produtos")
@@ -32,7 +29,7 @@ public class Produto {
 	private String descricao;
 	
 	@NotNull(message = "O atributo quantidade é Obrigatório!")
-	@Positive
+	@PositiveOrZero
 	private Integer quantidade;
 	
 	@NotNull(message = "O atributo preço é Obrigatório!")
@@ -41,11 +38,11 @@ public class Produto {
 	@NotBlank(message = "O atributo imagem é Obrigatório!")
 	private String imagem;
 	
-	@NotNull(message = "O atributo avaliação é Obrigatório!")
-	@Positive
+//	@NotNull(message = "O atributo avaliação é Obrigatório!")
+	@PositiveOrZero
 	private BigDecimal avaliacao;
 	
-	@NotBlank(message = "O atributo comentario é Obrigatório!")
+//	@NotBlank(message = "O atributo comentario é Obrigatório!")
 	@Size(min = 10, max = 1000, message = "O atributo descricao deve conter no mínimo 10 e no máximo 1000 caracteres")
 	private String comentario;
 	
