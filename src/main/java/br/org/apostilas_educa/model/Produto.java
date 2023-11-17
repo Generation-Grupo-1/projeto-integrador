@@ -40,10 +40,10 @@ public class Produto {
 	
 //	@NotNull(message = "O atributo avaliação é Obrigatório!")
 	@PositiveOrZero
-	private BigDecimal avaliacao;
+	private BigDecimal avaliacao = BigDecimal.ZERO;
 	
 //	@NotBlank(message = "O atributo comentario é Obrigatório!")
-	@Size(min = 10, max = 1000, message = "O atributo descricao deve conter no mínimo 10 e no máximo 1000 caracteres")
+	@Size(max = 1000, message = "O atributo descricao deve conter no máximo 1000 caracteres")
 	private String comentario;
 	
 	
