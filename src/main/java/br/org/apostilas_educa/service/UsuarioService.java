@@ -73,8 +73,9 @@ public class UsuarioService {
 
 				usuarioLogin.get().setId(usuario.get().getId());
 				usuarioLogin.get().setNome(usuario.get().getNome());
-				usuarioLogin.get().setToken(gerarToken(usuarioLogin.get().getUsuario()));
 				usuarioLogin.get().setSenha("");
+				usuarioLogin.get().setTipo(usuario.get().getTipo());
+				usuarioLogin.get().setToken(gerarToken(usuarioLogin.get().getUsuario()));
 
 				return usuarioLogin;
 
