@@ -40,10 +40,7 @@ public class Usuario {
 
 	@NotBlank(message = "O atributo tipo é obrigatório")
 	private String tipo="USER";
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
-    @JsonIgnoreProperties("usuario")
-    private List<Produto> produto;
+
 
 	public Long getId() {
 		return id;
@@ -83,14 +80,6 @@ public class Usuario {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
-	}
-
-	public List<Produto> getProduto() {
-		return produto;
-	}
-
-	public void setProduto(List<Produto> produto) {
-		this.produto = produto;
 	}
 	
 }

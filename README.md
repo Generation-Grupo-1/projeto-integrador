@@ -1,4 +1,5 @@
-## Diagrama de classes
+# Apostila Educa
+## Diagrama de classes UML
 
 ```mermaid
 classDiagram
@@ -20,7 +21,6 @@ classDiagram
     + comentario: String
     --
     - categoria: Categoria
-    - usuario: Usuario
   }
 
   class Usuario {
@@ -35,6 +35,4 @@ classDiagram
 
   Categoria "1" --> "0..n" Produto : tem
   Produto "1" --> "0..1" Categoria : pertence a
-  Produto "1" --> "0..1" Usuario : pertence a
-  Usuario "1" --> "0..n" Produto : tem
 ```
