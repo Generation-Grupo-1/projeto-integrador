@@ -45,15 +45,13 @@ public class Produto {
 //	@NotBlank(message = "O atributo comentario é Obrigatório!")
 	@Size(max = 1000, message = "O atributo descricao deve conter no máximo 1000 caracteres")
 	private String comentario;
-	
-	
-	
+
 	@ManyToOne
-	@JsonIgnoreProperties("produtos")
+	@JsonIgnoreProperties("produto")
 	private Categoria categoria;
 	
 	@ManyToOne
-	@JsonIgnoreProperties("produtos")
+	@JsonIgnoreProperties("produto")
 	private Usuario usuario;
 
 	public Long getId() {
@@ -120,20 +118,19 @@ public class Produto {
 		this.comentario = comentario;
 	}
 
-	public Categoria getCategorias() {
+	public Categoria getCategoria() {
 		return categoria;
 	}
 
-	public void setCategorias(Categoria categoria) {
+	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
 
-	public Usuario getUsuarios() {
+	public Usuario getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuarios(Usuario usuario) {
+	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
 }
